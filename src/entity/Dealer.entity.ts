@@ -1,12 +1,11 @@
 import { Entity, Column } from 'typeorm';
-import { ContentAbstractEntity} from ".";
+import { ContentAbstractEntity } from '.';
 
 /**
  * Class Dealer
  */
 @Entity()
 export class Dealer extends ContentAbstractEntity {
-
     @Column({ unique: true })
     name!: string;
 
@@ -18,4 +17,3 @@ export class Dealer extends ContentAbstractEntity {
         Object.assign(this, dealer);
     }
 }
-

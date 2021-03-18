@@ -1,5 +1,4 @@
-import {Column, CreateDateColumn, PrimaryGeneratedColumn} from 'typeorm';
-
+import { Column, CreateDateColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 /**
  * Abstract class Content

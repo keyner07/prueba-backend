@@ -1,13 +1,11 @@
 import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
-import {ContentAbstractEntity, UserEntity} from ".";
-
+import { ContentAbstractEntity, UserEntity } from '.';
 
 /**
  * Class Car
  */
 @Entity()
 export class Car extends ContentAbstractEntity {
-
     @Column()
     name!: string;
 
@@ -19,8 +17,8 @@ export class Car extends ContentAbstractEntity {
 
     @Column()
     userId!: number;
-    @ManyToOne(() => UserEntity,(user) => user.id,{ eager: true})
-    @JoinColumn({ name: 'userId'})
+    @ManyToOne(() => UserEntity, (user) => user.id, { eager: true })
+    @JoinColumn({ name: 'userId' })
     user!: UserEntity;
 
     constructor(car: Partial<Car>) {

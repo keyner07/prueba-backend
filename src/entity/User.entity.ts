@@ -2,15 +2,13 @@ import { Entity, Column, BeforeInsert, OneToOne, JoinColumn } from 'typeorm';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import Config from '../config';
-import {DealerEntity, ContentAbstractEntity} from ".";
-
+import { DealerEntity, ContentAbstractEntity } from '.';
 
 /**
  * Class User
  */
 @Entity()
 export class User extends ContentAbstractEntity {
-
     @Column()
     name!: string;
 
