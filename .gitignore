@@ -1,0 +1,22 @@
+
+#Node modules
+node_modules/
+
+yarn-error.log
+.eslintcache
+
+# Environment variables
+.env
+
+# Credentials of database
+ormconfig.json
+ormconfig.js
+
+# Folder of javascript NodeJS
+dist/
+
+# testing
+/coverage
+
+# Npm package
+package-lock.json
