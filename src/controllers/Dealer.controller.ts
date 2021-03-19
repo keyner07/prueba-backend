@@ -15,7 +15,7 @@ export default class DealerController {
         try {
             const { name, year, color } = req.body;
             // @ts-ignore
-            const id = req.user?.id;
+            const userId = (req.user?.id as number);
 
             if (!(name && year && color)) {
                 next(new General(400, 'Missing parameters.'));
@@ -23,7 +23,7 @@ export default class DealerController {
             }
 
             const carRepo: EntityRepository<CarEntity> = new EntityRepository<CarEntity>(CarEntity);
-            const car: CarEntity = new CarEntity({ name, year, color, userId: id });
+            const car: CarEntity = new CarEntity({ name, year, color, userId });
             await carRepo.create(car);
 
             res.status(201).json({ message: 'Created car.' });
@@ -31,7 +31,7 @@ export default class DealerController {
             next(new General(500, err));
         }
     }
-
+    
     /**
      * Controller for get car by id.
      * @param {Request} req
@@ -41,12 +41,11 @@ export default class DealerController {
      */
     static async getCarById(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const { id } = req.params;
+            const id = (req.params.id as unknown as number);
 
             const carRepo: EntityRepository<CarEntity> = new EntityRepository<CarEntity>(CarEntity);
-            const idCar = parseInt(id);
             const car: CarEntity | undefined = await carRepo.findOne(
-                new CarEntity({ id: idCar, isActive: true }),
+                new CarEntity({ id, isActive: true }),
             );
             if (!car) {
                 next(new General(404, 'Not found'));
@@ -68,14 +67,13 @@ export default class DealerController {
      */
     static async deleteCar(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const { id } = req.params;
+            const id = (req.params.id as unknown as number);
             // @ts-ignore
-            const idUser = req.user?.id;
+            const idUser = (req.user?.id as number);
 
             const carRepo: EntityRepository<CarEntity> = new EntityRepository<CarEntity>(CarEntity);
-            const idCar = parseInt(id);
             const car: CarEntity | undefined = await carRepo.findOne(
-                new CarEntity({ id: idCar, isActive: true }),
+                new CarEntity({ id, isActive: true }),
             );
             if (!car) {
                 next(new General(404, 'Not found'));

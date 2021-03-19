@@ -13,7 +13,7 @@ export abstract class Content {
     @CreateDateColumn()
     createdAt!: Date;
 
-    constructor(content: Partial<Content>) {
+    constructor(content?: Partial<Content>) {
         Object.assign(this, content);
     }
 }

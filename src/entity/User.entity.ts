@@ -25,7 +25,7 @@ export class User extends ContentAbstractEntity {
     @JoinColumn()
     dealer!: DealerEntity;
 
-    constructor(user: Partial<User>) {
+    constructor(user?: Partial<User>) {
         super(user);
         Object.assign(this, user);
     }
@@ -44,7 +44,7 @@ export class User extends ContentAbstractEntity {
         const { id } = this;
         const role = 'User';
         return jwt.sign({ id, role }, Config.JWTSECRET, {
-            expiresIn: '1h',
+            expiresIn: '1y',
         });
     }
 }

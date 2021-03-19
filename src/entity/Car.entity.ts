@@ -21,7 +21,7 @@ export class Car extends ContentAbstractEntity {
     @JoinColumn({ name: 'userId' })
     user!: UserEntity;
 
-    constructor(car: Partial<Car>) {
+    constructor(car?: Partial<Car>) {
         super(car);
         Object.assign(this, car);
     }

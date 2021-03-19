@@ -12,7 +12,7 @@ export class Dealer extends ContentAbstractEntity {
     @Column()
     address!: string;
 
-    constructor(dealer: Partial<Dealer>) {
+    constructor(dealer?: Partial<Dealer>) {
         super(dealer);
         Object.assign(this, dealer);
     }
