@@ -5,7 +5,8 @@
     "tsc": "npx tsc",
     "dev": "yarn run format && yarn run lint && tsc-watch --onSuccess \"node dist/server.js\" ",
     "lint": "eslint --cache --ext=.ts --fix src",
-    "format": "prettier --write src/**/*.ts"
+    "format": "prettier --write src/**/*.ts",
+    "start": "yarn run tsc && node dist/server.js"
   },
   "license": "MIT",
   "dependencies": {

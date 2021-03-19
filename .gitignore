@@ -10,7 +10,6 @@ yarn-error.log
 
 # Credentials of database
 ormconfig.json
-ormconfig.js
 
 # Folder of javascript NodeJS
 dist/
@@ -20,3 +19,8 @@ dist/
 
 # Npm package
 package-lock.json
+
+docke-compose.yml
+Dockerfile
+wait-for-mysql.sh
+.dockerignore
