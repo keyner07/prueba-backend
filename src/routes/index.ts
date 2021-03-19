@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
-import IndexController from '../controllers';
+import { UserController, DealerController } from '../controllers';
 
 /**
  * Class Index Routes
@@ -17,15 +17,23 @@ class IndexRoutes {
         /**
          * GET [/api/login] Route for login user.
          */
-        this.router.get('/login', IndexController.login);
+        this.router.get('/login', UserController.login);
         /**
          * POST [/api/create] Route for create user and dealer.
          */
-        this.router.post('/create', IndexController.createUser);
+        this.router.post('/create', UserController.createUser);
         /**
-         * POST [/api/cars/create] Route for create car.
+         * POST [/api/cars] Route for create car.
          */
-        this.router.post('/cars/create', IndexController.createCar);
+        this.router.post(
+            '/cars',
+            passport.authenticate('jwt', { session: false }),
+            DealerController.createCar,
+        );
+        /**
+         * GET [/api/cars/:id] Route for show car by id.
+         */
+        this.router.get('/cars/:id', DealerController.getCarById);
     }
 }
 
