@@ -42,6 +42,14 @@ class IndexRoutes {
             passport.authenticate('jwt', { session: false }),
             DealerController.deleteCar,
         );
+        /**
+         * PUT [/api/cars/:id] Route for edit car.
+         */
+         this.router.put(
+            '/cars/:id',
+            passport.authenticate('jwt', { session: false }),
+            DealerController.editCar,
+        );
     }
 }
 

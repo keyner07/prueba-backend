@@ -93,4 +93,40 @@ export default class DealerController {
             next(new General(500, err));
         }
     }
+
+    /**
+     * Controller for edit car by publisher.
+     * @param {Request} req
+     * @param {Response} res
+     * @param {NextFunction} next
+     * @returns
+     */
+     static async editCar(req: Request, res: Response, next: NextFunction): Promise<void> {
+         try {
+            const { id } = req.params;
+            // @ts-ignore
+            const idUser = req.user?.id;
+
+            const carRepo: EntityRepository<CarEntity> = new EntityRepository<CarEntity>(CarEntity);
+            const idCar = parseInt(id);
+            const car: CarEntity | undefined = await carRepo.findOne(
+                new CarEntity({ id: idCar, isActive: true }),
+            );
+            if (!car) {
+                next(new General(404, 'Not found'));
+                return;
+            }
+            if (idUser !== car.userId) {
+                next(new General(403, 'Unauthorized'));
+                return;
+            }
+
+            const {body} = req;
+            await carRepo.update(car.id,body);
+
+            res.status(200).json({ message: 'Edited car.'});
+         }catch(err){
+             next(new General(500, err));
+         }
+     }
 }
