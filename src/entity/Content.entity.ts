@@ -10,7 +10,7 @@ export abstract class Content {
     @Column('boolean', { default: true, select: false })
     isActive!: boolean;
 
-    @CreateDateColumn({ select: false})
+    @CreateDateColumn({ select: false })
     createdAt!: Date;
 
     constructor(content?: Partial<Content>) {

@@ -18,10 +18,10 @@ export class User extends ContentAbstractEntity {
     @Column({ length: 150, unique: true })
     email!: string;
 
-    @Column({select: false})
+    @Column({ select: false })
     password!: string;
 
-    @OneToOne(() => DealerEntity, {eager: true})
+    @OneToOne(() => DealerEntity, { eager: true, cascade: true })
     @JoinColumn()
     dealer!: DealerEntity;
 
