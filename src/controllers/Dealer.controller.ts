@@ -32,6 +32,13 @@ export default class DealerController {
         }
     }
 
+    /**
+     * Controller for get car by id.
+     * @param {Request} req
+     * @param {Response} res
+     * @param {NextFunction} next
+     * @returns
+     */
     static async getCarById(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const { id } = req.params;
@@ -47,6 +54,41 @@ export default class DealerController {
             }
 
             res.status(200).json(car);
+        } catch (err) {
+            next(new General(500, err));
+        }
+    }
+
+    /**
+     * Controller for delete car by publisher.
+     * @param {Request} req
+     * @param {Response} res
+     * @param {NextFunction} next
+     * @returns
+     */
+    static async deleteCar(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const { id } = req.params;
+            // @ts-ignore
+            const idUser = req.user?.id;
+
+            const carRepo: EntityRepository<CarEntity> = new EntityRepository<CarEntity>(CarEntity);
+            const idCar = parseInt(id);
+            const car: CarEntity | undefined = await carRepo.findOne(
+                new CarEntity({ id: idCar, isActive: true }),
+            );
+            if (!car) {
+                next(new General(404, 'Not found'));
+                return;
+            }
+            if (idUser !== car.userId) {
+                next(new General(403, 'Unauthorized'));
+                return;
+            }
+
+            await carRepo.update(car.id, { isActive: false });
+
+            res.status(200).json({ message: 'Deleted car.' });
         } catch (err) {
             next(new General(500, err));
         }

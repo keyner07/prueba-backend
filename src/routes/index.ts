@@ -34,6 +34,14 @@ class IndexRoutes {
          * GET [/api/cars/:id] Route for show car by id.
          */
         this.router.get('/cars/:id', DealerController.getCarById);
+        /**
+         * DELETE [/api/cars/:id] Route for delete car.
+         */
+        this.router.delete(
+            '/cars/:id',
+            passport.authenticate('jwt', { session: false }),
+            DealerController.deleteCar,
+        );
     }
 }
 
