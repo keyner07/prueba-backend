@@ -18,6 +18,10 @@ class IndexRoutes {
          * POST [/api/create] Route for create user and dealer.
          */
         this.router.post('/create', IndexController.createUser);
+        /**
+         * POST [/api/cars/create] Route for create car.
+         */
+        this.router.post('/cars/create', IndexController.createCar);
     }
 }
 
