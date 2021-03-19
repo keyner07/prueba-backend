@@ -12,24 +12,25 @@ class IndexRoutes {
         this.router = Router();
         this.routes();
     }
-
-    protected routes(): void {
+    protected userRoutes(): void {
         /**
          * GET [/api/login] Route for login user.
          */
-        this.router.get('/login', UserController.login);
-        /**
-         * POST [/api/create] Route for create user and dealer.
-         */
-        this.router.post('/create', UserController.createUser);
-        /**
-         * PUT [/api/edit] Route for edit user
-         */
-        this.router.put(
-            '/edit',
-            passport.authenticate('jwt', { session: false }),
-            UserController.editUser,
-        );
+         this.router.get('/login', UserController.login);
+         /**
+          * POST [/api/create] Route for create user and dealer.
+          */
+         this.router.post('/create', UserController.createUser);
+         /**
+          * PUT [/api/edit] Route for edit user
+          */
+         this.router.put(
+             '/edit',
+             passport.authenticate('jwt', { session: false }),
+             UserController.editUser,
+         );
+    }
+    protected routes(): void {
         /**
          * POST [/api/cars] Route for create car.
          */
