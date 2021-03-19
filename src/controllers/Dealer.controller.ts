@@ -109,6 +109,7 @@ export default class DealerController {
             const carRepo: EntityRepository<CarEntity> = new EntityRepository<CarEntity>(CarEntity);
             const car: CarEntity | undefined = await carRepo.findOne(
                 new CarEntity({ id, isActive: true }),
+                { select: ['id','userId']}
             );
             if (!car) {
                 next(new General(404, 'Not found'));

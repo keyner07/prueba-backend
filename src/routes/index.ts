@@ -10,6 +10,7 @@ class IndexRoutes {
 
     constructor() {
         this.router = Router();
+        this.userRoutes();
         this.routes();
     }
     protected userRoutes(): void {
