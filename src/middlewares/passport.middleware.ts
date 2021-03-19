@@ -13,7 +13,7 @@ export default new Strategy(opts, async (payload, done) => {
     try {
         const user = await new EntityRepository<UserEntity>(UserEntity).findOne(payload.id, {
             select: ['id', 'email'],
-            where: { isActive: true},
+            where: { isActive: true },
         });
         const { exp, role } = payload;
         if (exp < Date.now()) {
