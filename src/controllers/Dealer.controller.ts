@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Request, Response, NextFunction } from 'express';
+import { ILike } from 'typeorm';
 import { CarEntity, EntityRepository } from '../entity';
 import { General } from '../utils';
 
@@ -31,7 +32,30 @@ export default class DealerController {
             next(new General(500, err));
         }
     }
+    /**
+     * Controller for get all cars.
+     * @param {Request} req
+     * @param {Response} res
+     * @param {NextFunction} next
+     * @returns
+     */
+    static async getCars(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const { search } = req.query;
 
+            const carRepo: EntityRepository<CarEntity> = new EntityRepository<CarEntity>(CarEntity);
+            const where = search
+                ? [
+                      { name: ILike(`%${search || ''}%`), isActive: true },
+                      { color: ILike(`%${search || ''}%`) },
+                  ]
+                : [{ isActive: true }];
+            const cars: CarEntity[] | undefined = await carRepo.find({ where: where });
+            res.status(200).json(cars);
+        } catch (err) {
+            next(new General(500, err));
+        }
+    }
     /**
      * Controller for get car by id.
      * @param {Request} req

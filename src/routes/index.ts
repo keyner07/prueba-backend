@@ -39,6 +39,10 @@ class IndexRoutes {
             DealerController.createCar,
         );
         /**
+         * GET [/api/cars] Route for get cars.
+         */
+        this.router.get('/cars', DealerController.getCars);
+        /**
          * GET [/api/cars/:id] Route for show car by id.
          */
         this.router.get('/cars/:id', DealerController.getCarById);
