@@ -54,6 +54,9 @@ export default class DealerController {
                 select: ['id', 'name', 'year', 'color', 'user', 'createdAt'],
                 relations: ['user'],
                 where: where,
+                order: {
+                    createdAt: "DESC"
+                }
             });
             res.status(200).json(cars);
         } catch (err) {
@@ -74,6 +77,10 @@ export default class DealerController {
             const carRepo: EntityRepository<CarEntity> = new EntityRepository<CarEntity>(CarEntity);
             const car: CarEntity | undefined = await carRepo.findOne(
                 new CarEntity({ id, isActive: true }),
+                {
+                    select: ['id', 'name', 'year', 'color', 'user','createdAt'],
+                    relations: ['user']
+                },
             );
             if (!car) {
                 next(new General(404, 'Not found'));
@@ -119,7 +126,6 @@ export default class DealerController {
             next(new General(500, err));
         }
     }
-
     /**
      * Controller for edit car by publisher.
      * @param {Request} req
@@ -137,6 +143,7 @@ export default class DealerController {
             const idCar = parseInt(id);
             const car: CarEntity | undefined = await carRepo.findOne(
                 new CarEntity({ id: idCar, isActive: true }),
+                { select: ['id', 'userId'] },
             );
             if (!car) {
                 next(new General(404, 'Not found'));
@@ -146,8 +153,7 @@ export default class DealerController {
                 next(new General(403, 'Unauthorized'));
                 return;
             }
-
-            const { body } = req;
+            const { body } = req.body;
             await carRepo.update(car.id, body);
 
             res.status(200).json({ message: 'Edited car.' });

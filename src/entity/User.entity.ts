@@ -21,7 +21,7 @@ export class User extends ContentAbstractEntity {
     @Column({select: false})
     password!: string;
 
-    @OneToOne(() => DealerEntity)
+    @OneToOne(() => DealerEntity, {eager: true})
     @JoinColumn()
     dealer!: DealerEntity;
 
