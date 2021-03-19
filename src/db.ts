@@ -1,4 +1,5 @@
 import { Connection, createConnection, getConnection, getConnectionManager } from "typeorm";
+import {createData} from './seeders';
 
 class Database {
     private connection!: Connection;
@@ -7,7 +8,8 @@ class Database {
         if(!getConnectionManager().has('default')) {
             this.connection = await createConnection();
             await this.connection.synchronize();
-            this.connection.createQueryRunner();
+            await createData(this.connection);
+            // this.connection.createQueryRunner();
         }
         else {
             this.connection = getConnection();

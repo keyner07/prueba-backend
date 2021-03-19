@@ -55,8 +55,8 @@ export default class DealerController {
                 relations: ['user'],
                 where: where,
                 order: {
-                    createdAt: "DESC"
-                }
+                    createdAt: 'DESC',
+                },
             });
             res.status(200).json(cars);
         } catch (err) {
@@ -78,8 +78,8 @@ export default class DealerController {
             const car: CarEntity | undefined = await carRepo.findOne(
                 new CarEntity({ id, isActive: true }),
                 {
-                    select: ['id', 'name', 'year', 'color', 'user','createdAt'],
-                    relations: ['user']
+                    select: ['id', 'name', 'year', 'color', 'user', 'createdAt'],
+                    relations: ['user'],
                 },
             );
             if (!car) {
