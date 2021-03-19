@@ -84,4 +84,40 @@ export default class UserController {
             next(new General(500, err.message));
         }
     }
+
+    /**
+     * Controller for edit user
+     * @param {Request} req
+     * @param {Response} res
+     * @param {NextFunction} next
+     * @returns
+     */
+     static async editUser(req: Request, res: Response, next: NextFunction): Promise<void> {
+         try {
+            // @ts-ignore
+            const idUser = (req.user?.id as number);
+            const {name, age} = req.body;
+            if(!(name || age)){
+                next(new General(400, 'Missing parameters.'));
+                return;
+            }
+
+            const userRepo: EntityRepository<UserEntity> = new EntityRepository<UserEntity>(
+                UserEntity,
+            );
+
+            const user: UserEntity = new UserEntity();
+            if(name){
+                user.name = name;
+            }
+            if(age){
+                user.age = age;
+            }
+            await userRepo.update(idUser,user);
+
+            res.status(200).json({ message: "Edited user."});
+         }catch(err){
+             next(new General(500, err));
+         }
+     }
 }

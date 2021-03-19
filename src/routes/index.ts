@@ -23,6 +23,14 @@ class IndexRoutes {
          */
         this.router.post('/create', UserController.createUser);
         /**
+         * PUT [/api/edit] Route for edit user
+         */
+        this.router.put(
+            '/edit',
+            passport.authenticate('jwt', { session: false }),
+            UserController.editUser,
+        );
+        /**
          * POST [/api/cars] Route for create car.
          */
         this.router.post(
@@ -45,7 +53,7 @@ class IndexRoutes {
         /**
          * PUT [/api/cars/:id] Route for edit car.
          */
-         this.router.put(
+        this.router.put(
             '/cars/:id',
             passport.authenticate('jwt', { session: false }),
             DealerController.editCar,
