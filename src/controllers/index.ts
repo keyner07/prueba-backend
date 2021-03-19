@@ -43,6 +43,40 @@ export default class IndexController {
             next(new General(500, err));
         }
     }
+    static async login(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const { email, password } = req.body;
+            if (!(email && password)) {
+                next(new General(400, 'Missing parameters.'));
+                return;
+            }
+
+            const userRepo: EntityRepository<UserEntity> = new EntityRepository<UserEntity>(
+                UserEntity,
+            );
+            const isActive = true;
+            const userAuth: UserEntity = new UserEntity({ email, isActive });
+            const user = await userRepo.findOne(userAuth, {
+                select: ['name', 'id', 'email', 'password'],
+            });
+
+            if (!user) {
+                return next(new General(404, 'Not found the user.'));
+                // return;
+            }
+            const match: boolean = await user.checkIfPasswordMatch(password);
+            if (!match) {
+                next(new General(401, 'Email or password incorrect'));
+                return;
+            }
+
+            const token = await user.generateToken();
+
+            res.status(200).json({ token, user });
+        } catch (err) {
+            next(new General(500, err.message));
+        }
+    }
 
     /**
      * Controller for create car.
