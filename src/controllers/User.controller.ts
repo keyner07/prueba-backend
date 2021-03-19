@@ -92,12 +92,12 @@ export default class UserController {
      * @param {NextFunction} next
      * @returns
      */
-     static async editUser(req: Request, res: Response, next: NextFunction): Promise<void> {
-         try {
+    static async editUser(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
             // @ts-ignore
-            const idUser = (req.user?.id as number);
-            const {name, age} = req.body;
-            if(!(name || age)){
+            const idUser = req.user?.id as number;
+            const { name, age } = req.body;
+            if (!(name || age)) {
                 next(new General(400, 'Missing parameters.'));
                 return;
             }
@@ -107,17 +107,17 @@ export default class UserController {
             );
 
             const user: UserEntity = new UserEntity();
-            if(name){
+            if (name) {
                 user.name = name;
             }
-            if(age){
+            if (age) {
                 user.age = age;
             }
-            await userRepo.update(idUser,user);
+            await userRepo.update(idUser, user);
 
-            res.status(200).json({ message: "Edited user."});
-         }catch(err){
-             next(new General(500, err));
-         }
-     }
+            res.status(200).json({ message: 'Edited user.' });
+        } catch (err) {
+            next(new General(500, err));
+        }
+    }
 }

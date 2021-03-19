@@ -15,7 +15,7 @@ export default class DealerController {
         try {
             const { name, year, color } = req.body;
             // @ts-ignore
-            const userId = (req.user?.id as number);
+            const userId = req.user?.id as number;
 
             if (!(name && year && color)) {
                 next(new General(400, 'Missing parameters.'));
@@ -31,7 +31,7 @@ export default class DealerController {
             next(new General(500, err));
         }
     }
-    
+
     /**
      * Controller for get car by id.
      * @param {Request} req
@@ -41,7 +41,7 @@ export default class DealerController {
      */
     static async getCarById(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const id = (req.params.id as unknown as number);
+            const id = (req.params.id as unknown) as number;
 
             const carRepo: EntityRepository<CarEntity> = new EntityRepository<CarEntity>(CarEntity);
             const car: CarEntity | undefined = await carRepo.findOne(
@@ -67,9 +67,9 @@ export default class DealerController {
      */
     static async deleteCar(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const id = (req.params.id as unknown as number);
+            const id = (req.params.id as unknown) as number;
             // @ts-ignore
-            const idUser = (req.user?.id as number);
+            const idUser = req.user?.id as number;
 
             const carRepo: EntityRepository<CarEntity> = new EntityRepository<CarEntity>(CarEntity);
             const car: CarEntity | undefined = await carRepo.findOne(
@@ -99,8 +99,8 @@ export default class DealerController {
      * @param {NextFunction} next
      * @returns
      */
-     static async editCar(req: Request, res: Response, next: NextFunction): Promise<void> {
-         try {
+    static async editCar(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
             const { id } = req.params;
             // @ts-ignore
             const idUser = req.user?.id;
@@ -119,12 +119,12 @@ export default class DealerController {
                 return;
             }
 
-            const {body} = req;
-            await carRepo.update(car.id,body);
+            const { body } = req;
+            await carRepo.update(car.id, body);
 
-            res.status(200).json({ message: 'Edited car.'});
-         }catch(err){
-             next(new General(500, err));
-         }
-     }
+            res.status(200).json({ message: 'Edited car.' });
+        } catch (err) {
+            next(new General(500, err));
+        }
+    }
 }
