@@ -19,13 +19,15 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.2.31"
+    "typeorm": "^0.2.31",
+    "typeorm-seeding": "^1.6.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
     "@types/cors": "^2.8.10",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.11",
+    "@types/faker": "^5.1.7",
     "@types/helmet": "^4.0.0",
     "@types/jsonwebtoken": "^8.5.1",
     "@types/morgan": "^1.9.2",
