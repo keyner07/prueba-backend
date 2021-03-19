@@ -7,10 +7,10 @@ export abstract class Content {
     @PrimaryGeneratedColumn('increment')
     id!: number;
 
-    @Column('boolean', { default: true })
+    @Column('boolean', { default: true, select: false })
     isActive!: boolean;
 
-    @CreateDateColumn()
+    @CreateDateColumn({ select: false})
     createdAt!: Date;
 
     constructor(content?: Partial<Content>) {

@@ -18,7 +18,7 @@ export class User extends ContentAbstractEntity {
     @Column({ length: 150, unique: true })
     email!: string;
 
-    @Column()
+    @Column({select: false})
     password!: string;
 
     @OneToOne(() => DealerEntity)

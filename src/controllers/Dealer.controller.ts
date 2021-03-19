@@ -50,7 +50,11 @@ export default class DealerController {
                       { color: ILike(`%${search || ''}%`) },
                   ]
                 : [{ isActive: true }];
-            const cars: CarEntity[] | undefined = await carRepo.find({ where: where });
+            const cars: CarEntity[] | undefined = await carRepo.find({
+                select: ['id', 'name', 'year', 'color', 'user', 'createdAt'],
+                relations: ['user'],
+                where: where,
+            });
             res.status(200).json(cars);
         } catch (err) {
             next(new General(500, err));

@@ -15,7 +15,7 @@ export class Car extends ContentAbstractEntity {
     @Column()
     color!: string;
 
-    @Column()
+    @Column({ select: false})
     userId!: number;
     @ManyToOne(() => UserEntity, (user) => user.id, { eager: true })
     @JoinColumn({ name: 'userId' })
